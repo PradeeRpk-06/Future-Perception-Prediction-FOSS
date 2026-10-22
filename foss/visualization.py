@@ -5,16 +5,7 @@ import numpy as np
 import os
 
 def plot_product_forecast_subplots(asin, data_dict, sentiment_series=None, classification="", save_path=None):
-    """
-    Plot weekly review forecast and sentiment in two subplots for a single product.
 
-    Args:
-        asin (str): ASIN of the product
-        data_dict (dict): dict containing forecast data per ASIN
-        sentiment_series (pd.Series or list/np.array): optional sentiment series
-        classification (str): optional classification label
-        save_path (str): optional path to save the plot (PNG)
-    """
     entry = data_dict.get(asin)
     if entry is None:
         print(f"No forecast data for ASIN: {asin}")
@@ -27,9 +18,7 @@ def plot_product_forecast_subplots(asin, data_dict, sentiment_series=None, class
 
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(12, 9), sharex=True)
 
-    # -----------------------
-    # Top subplot: Review Count
-    # -----------------------
+  
     if df_prophet is not None and 'y' in df_prophet:
         try:
             x_hist = pd.to_datetime(df_prophet['ds']).to_numpy()
@@ -53,7 +42,6 @@ def plot_product_forecast_subplots(asin, data_dict, sentiment_series=None, class
         y_forecast = forecast['yhat'].to_numpy()
         ax1.plot(x_forecast, y_forecast, color="orange", label="Model Fit/Prediction")
 
-        # Highlight future prediction if possible
         try:
             forecast_start = pd.to_datetime(df_prophet['ds']).max()
             future_mask = pd.to_datetime(forecast['ds']) > forecast_start
@@ -71,9 +59,6 @@ def plot_product_forecast_subplots(asin, data_dict, sentiment_series=None, class
     ax1.legend()
     ax1.grid(alpha=0.3)
 
-    # -----------------------
-    # Bottom subplot: Sentiment
-    # -----------------------
     if sentiment_series is not None:
         if isinstance(sentiment_series, pd.Series):
             if isinstance(sentiment_series.index, pd.PeriodIndex):
@@ -94,9 +79,6 @@ def plot_product_forecast_subplots(asin, data_dict, sentiment_series=None, class
     ax2.legend()
     ax2.grid(alpha=0.3)
 
-    # -----------------------
-    # Format X-axis if datetime
-    # -----------------------
     try:
         ax2.xaxis.set_major_locator(mdates.MonthLocator())
         ax2.xaxis.set_major_formatter(mdates.DateFormatter('%b %d'))
@@ -106,9 +88,6 @@ def plot_product_forecast_subplots(asin, data_dict, sentiment_series=None, class
 
     plt.tight_layout()
 
-    # -----------------------
-    # Save or show
-    # -----------------------
     if save_path:
         parent = os.path.dirname(save_path)
         if parent:
@@ -118,7 +97,6 @@ def plot_product_forecast_subplots(asin, data_dict, sentiment_series=None, class
     else:
         plt.show()
 def plot_actual_vs_predicted(df_results):
-    """Plots actual vs predicted sentiment trends over time."""
     import matplotlib.pyplot as plt
 
     df_results = df_results.dropna(subset=["reviewTime"])
@@ -127,7 +105,6 @@ def plot_actual_vs_predicted(df_results):
     actual_trend = df_results.groupby("month")["actual"].mean()
     pred_trend = df_results.groupby("month")["predicted"].mean()
 
-    # ---- Graph 1: Actual Sentiment ----
     plt.figure(figsize=(10,5))
     plt.plot(actual_trend.index.astype(str), actual_trend.values, marker="o", color="blue", label="Actual Sentiment")
     plt.title("Actual Sentiment Over Time\nShows how real sentiment changes over months")
@@ -139,7 +116,6 @@ def plot_actual_vs_predicted(df_results):
     plt.tight_layout()
     plt.show()
 
-    # ---- Graph 2: Predicted Sentiment ----
     plt.figure(figsize=(10,5))
     plt.plot(pred_trend.index.astype(str), pred_trend.values, marker="o", color="green", label="Predicted Sentiment")
     plt.title("Predicted Sentiment Over Time\nShows how model predicts sentiment trend")
