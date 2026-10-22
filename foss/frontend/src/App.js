@@ -8,13 +8,13 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>🔮 Future Product Prediction</h1>
+        <h1> Future Product Prediction</h1>
         <h2>Analyze Amazon Products</h2>
 
         {/* Navigation */}
         <nav style={{ marginBottom: 20 }}>
           <Link to="/" style={{ marginRight: 15, color: "white", textDecoration: "none" }}>
-            🏠 Dashboard
+            Dashboard
           </Link>
         </nav>
 
