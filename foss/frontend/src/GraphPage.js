@@ -64,13 +64,13 @@ function GraphPage() {
     <div
       className="graph-container container"
       style={{
-        background: "#1e1e2f",   // Dark background
+        background: "#1e1e2f",  
         padding: "20px",
         borderRadius: "12px",
         color: "white",
       }}
     >
-      <h2 className="page-title">📈 Sentiment Trend for “{productName}”</h2>
+      <h2 className="page-title"> Sentiment Trend for “{productName}”</h2>
 
       {loading && <p>Loading chart…</p>}
       {err && <p className="error">{err}</p>}
