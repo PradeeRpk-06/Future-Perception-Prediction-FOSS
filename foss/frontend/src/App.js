@@ -3,7 +3,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import ProductDashboard from "./ProductDashboard";
 import GraphPage from "./GraphPage";
-/*------*/
+
 function App() {
   return (
     <div className="App">
