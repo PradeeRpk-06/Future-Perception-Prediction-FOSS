@@ -9,4 +9,4 @@ clean["fnet_embedding"] = clean["fnet_embedding"].apply(lambda x: json.dumps(x.t
 
 clean.to_csv("clean_reviews.csv", index=False)
 
-print("✅ clean_reviews.csv created with", len(clean), "rows (embeddings in JSON format)")
+print("clean_reviews.csv created with", len(clean), "rows (embeddings in JSON format)")
