@@ -45,7 +45,6 @@ function ProductDashboard() {
     <div>
       <h2> Choose a Product</h2>
 
-      {/* Product Buttons */}
       <div className="product-buttons">
         {PRODUCT_OPTIONS.map((product) => (
           <button
@@ -58,10 +57,9 @@ function ProductDashboard() {
         ))}
       </div>
 
-      {/* Loading */}
       {loading && <p>Loading summary…</p>}
 
-      {/* Show Summary */}
+  
       {summary && (
         <div
           style={{
@@ -88,7 +86,7 @@ function ProductDashboard() {
             </tbody>
           </table>
 
-          {/* Forecast Table */}
+        
           <h3> Forecast</h3>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <tbody>
@@ -103,7 +101,7 @@ function ProductDashboard() {
         </div>
       )}
 
-      {/* Show Trend Button */}
+    
       <div className="actions">
         <button
           onClick={handleShowTrend}
@@ -114,10 +112,9 @@ function ProductDashboard() {
         </button>
       </div>
 
-      {/* Accuracy Metrics */}
-      <AccuracyCard />   {/*  added card at bottom */
+  
+      <AccuracyCard />   
 
-      {/* Error */}
       {error && <div style={{ color: "red", marginTop: 10 }}>{error}</div>}
     </div>
   );
