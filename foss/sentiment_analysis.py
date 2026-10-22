@@ -44,11 +44,7 @@ def compute_sentiment(df: pd.DataFrame, text_column="reviewText") -> pd.DataFram
     return df
 
 def get_sentiment_series_all(df: pd.DataFrame, date_column="reviewTime", text_column="reviewText", freq='W') -> dict:
-    """
-    Returns sentiment series for all products.
-    
-    Output: {asin: pd.Series indexed by date, values = avg hybrid_score}
-    """
+
     df_sent = compute_sentiment(df, text_column)
     df_sent[date_column] = pd.to_datetime(df_sent[date_column], errors='coerce')
     df_sent = df_sent.dropna(subset=[date_column])
