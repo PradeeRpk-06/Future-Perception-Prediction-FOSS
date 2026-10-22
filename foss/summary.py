@@ -2,20 +2,17 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
-# summary.py
-
 def analyze_series(series, label="Data"):
     """Return summary for a sentiment series as a dictionary (JSON safe)."""
     if len(series) == 0:
         return {"message": f"No data available for {label}"}
 
-    series = pd.Series(series)  # ensure pandas Series
+    series = pd.Series(series)  
     avg_val = float(series.mean())
     last_val = float(series.iloc[-1])
     min_val, min_date = float(series.min()), str(series.idxmin())
     max_val, max_date = float(series.max()), str(series.idxmax())
 
-    # Trend detection
     trend = "Stable"
     if len(series) > 1:
         slope = series.iloc[-1] - series.iloc[0]
@@ -24,7 +21,6 @@ def analyze_series(series, label="Data"):
         elif slope < 0:
             trend = "Decreasing"
 
-    # Prediction based on last value
     prediction = "Likely Positive" if last_val > 0 else "Likely Negative"
 
     return {
@@ -51,19 +47,17 @@ def plot_sentiment(product, sentiment_series=None, forecast_dict=None, classific
 
     plt.figure(figsize=(12, 6))
 
-    # ---------- Historical sentiment ----------
     if sentiment_series is not None:
         if isinstance(sentiment_series, pd.Series):
             x_hist = sentiment_series.index.to_numpy() if isinstance(sentiment_series.index, pd.DatetimeIndex) else np.array(sentiment_series.index)
             y_hist = sentiment_series.to_numpy()
-        else:  # numpy array
+        else: 
             x_hist = np.arange(len(sentiment_series))
             y_hist = sentiment_series
 
         plt.plot(x_hist, y_hist, label="Historical Sentiment", marker="o", color="blue")
         print(analyze_series(pd.Series(y_hist, index=x_hist), label="Historical"))
 
-    # ---------- Forecast sentiment ----------
     if forecast_dict is not None and 'forecast' in forecast_dict:
         forecast_series = forecast_dict['forecast']['yhat']
         if isinstance(forecast_series, pd.Series):
@@ -86,15 +80,6 @@ def plot_sentiment(product, sentiment_series=None, forecast_dict=None, classific
 
 
 def generate_summary(products, forecast_results, classification_dict, sentiment_dict=None):
-    """
-    Create a summary DataFrame for all products.
-    
-    Args:
-        products: list of ASINs
-        forecast_results: dict of {asin: forecast_dict}
-        classification_dict: dict of {asin: string}
-        sentiment_dict: optional {asin: sentiment_series}
-    """
     data = {
         "product": [],
         "classification": [],
@@ -106,7 +91,6 @@ def generate_summary(products, forecast_results, classification_dict, sentiment_
         data["product"].append(p)
         data["classification"].append(classification_dict.get(p, ""))
 
-        # Forecast mean sentiment
         forecast_entry = forecast_results.get(p, {})
         if 'forecast' in forecast_entry:
             forecast_mean = forecast_entry['forecast']['yhat'].mean()
@@ -114,7 +98,6 @@ def generate_summary(products, forecast_results, classification_dict, sentiment_
             forecast_mean = np.nan
         data["forecast_mean_sentiment"].append(forecast_mean)
 
-        # Latest sentiment
         if sentiment_dict and p in sentiment_dict:
             s = sentiment_dict[p]
             latest_val = s.iloc[-1] if isinstance(s, pd.Series) else s[-1]
@@ -124,10 +107,6 @@ def generate_summary(products, forecast_results, classification_dict, sentiment_
 
     return pd.DataFrame(data)
 
-
-# ------------------------
-# Example Run
-# ------------------------
 if __name__ == "__main__":
     dates_hist = pd.date_range("2025-01-01", periods=6, freq="M")
     sentiment_values = [-0.1, -0.05, 0.0, 0.2, 0.1, 0.15]
@@ -148,9 +127,7 @@ if __name__ == "__main__":
     df_summary = generate_summary(["A123"], {"A123": forecast_dict}, {"A123": "Positive"}, {"A123": sentiment_series})
     print(df_summary)
 def analyze_classification_results(df_results):
-    """
-    Analyze classification results and return summary stats.
-    """
+    
     if df_results.empty:
         return {"message": "No classification results available"}
 
