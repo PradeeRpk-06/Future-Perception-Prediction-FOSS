@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AccuracyCard from "./AccuracyCard";   // ✅ import added
+import AccuracyCard from "./AccuracyCard";  
 
 const PRODUCT_OPTIONS = [
   "phone case", "shirt", "socks", "chain armament", "hat", "cap", "red hat", "kit"
@@ -29,7 +29,7 @@ function ProductDashboard() {
       const data = await res.json();
       setSummary(data);
     } catch (err) {
-      setError("❌ Could not fetch summary");
+      setError(" Could not fetch summary");
     } finally {
       setLoading(false);
     }
@@ -43,7 +43,7 @@ function ProductDashboard() {
 
   return (
     <div>
-      <h2>📌 Choose a Product</h2>
+      <h2> Choose a Product</h2>
 
       {/* Product Buttons */}
       <div className="product-buttons">
@@ -89,7 +89,7 @@ function ProductDashboard() {
           </table>
 
           {/* Forecast Table */}
-          <h3>🔮 Forecast</h3>
+          <h3> Forecast</h3>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <tbody>
               <tr><td><strong>Average</strong></td><td>{summary.forecast_summary.average}</td></tr>
@@ -110,12 +110,12 @@ function ProductDashboard() {
           className="action-btn"
           disabled={!selectedProduct}
         >
-          📈 Show Trend
+          Show Trend
         </button>
       </div>
 
       {/* Accuracy Metrics */}
-      <AccuracyCard />   {/* ✅ added card at bottom */}
+      <AccuracyCard />   {/*  added card at bottom */
 
       {/* Error */}
       {error && <div style={{ color: "red", marginTop: 10 }}>{error}</div>}
