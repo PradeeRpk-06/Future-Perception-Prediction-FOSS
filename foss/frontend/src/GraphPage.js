@@ -6,7 +6,7 @@ import {
   YAxis,
   Tooltip,
   CartesianGrid,
-  ResponsiveContainer, balabala
+  ResponsiveContainer, 
   Legend,
 } from "recharts";
 import { useParams } from "react-router-dom";
