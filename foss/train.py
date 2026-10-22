@@ -5,11 +5,9 @@ from langdetect import detect
 from googletrans import Translator
 import torch
 
-# 1) Load CSV
 df = pd.read_csv("amazon_reviews.csv")
 print("Columns in file:", df.columns)
 
-# 2) Clean text
 def clean_text(text):
     if not isinstance(text, str):
         return ""
@@ -19,9 +17,8 @@ def clean_text(text):
 
 df['cleaned_text'] = (df['reviewText'].fillna("") + " " + df['summary'].fillna("")).map(clean_text)
 
-# 3) Detect language and translate Tamil → English
 translator = Translator()
-printed_demo = False  # Flag to print only once
+printed_demo = False  
 
 def detect_and_translate(text):
     global printed_demo
@@ -42,7 +39,6 @@ def detect_and_translate(text):
 
 df['en_text'] = df['cleaned_text'].map(detect_and_translate)
 
-# 4) FNet Embeddings
 tokenizer = FNetTokenizer.from_pretrained("google/fnet-base")
 model = FNetModel.from_pretrained("google/fnet-base")
 
@@ -57,8 +53,7 @@ def fnet_embedding(text):
 
 df['fnet_embedding'] = df['en_text'].apply(lambda x: fnet_embedding(x).numpy())
 
-# 5) Save processed data for later use
 df.to_pickle("processed_reviews.pkl")
-print("✅ Training/Preprocessing done. Saved to processed_reviews.pkl")
+print("Training/Preprocessing done. Saved to processed_reviews.pkl")
 
 
